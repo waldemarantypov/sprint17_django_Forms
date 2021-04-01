@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'order_form.css'%}">
+    <title>Form</title>
+</head>
+<body>
+    <div class="wrapper">
+        <form class="form" action="{% url 'index' %}" method = "post">{% csrf_token %}
+          <div class="pageTitle title">Your Order </div>
+          <div class="secondaryTitle title">Please fill this form to order a book.</div>
+          <input type="text" name = "name", class="name formEntry" placeholder="First Name" />
+          <input type="text" name = "email", class="email formEntry" placeholder="Email"/>
+          <input type="text" name = "book", class="id formEntry" placeholder="Book"/>
+          <button class="submit formEntry">Submit</button>
+        </form>
+      </div>
+</body>
+</html>
