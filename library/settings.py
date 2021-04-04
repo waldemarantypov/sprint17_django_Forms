@@ -26,7 +26,7 @@ SECRET_KEY = 'SECRET KEY'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Application definition
 AUTH_USER_MODEL = 'authentication.CustomUser'
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'author',
     'book',
     'order',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

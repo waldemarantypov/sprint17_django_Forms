@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import CustomUser
 from order.models import Order
+from .forms import CustomUserForm
 
 # Create your views here.
 
@@ -17,17 +18,32 @@ def show_user_by_id(request, id):
     return render(request, 'user_by_id.html', {'orders_by_user': orders_by_user, 'user': user})
 
 
-def create_user(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        fname = request.POST.get('fname')
-        mname = request.POST.get('mname')
-        lname = request.POST.get('lname')
-        CustomUser.create(email, password, fname, mname, lname)
+def form_user(request, id = 0):
+    # if request.method == 'POST':
+    #     email = request.POST.get('email')
+    #     password = request.POST.get('password')
+    #     fname = request.POST.get('fname')
+    #     mname = request.POST.get('mname')
+    #     lname = request.POST.get('lname')
+    #     CustomUser.create(email, password, fname, mname, lname)
+    #     return redirect('all_users')
+    # return render(request, 'form_user.html', {})
+    if request.method == 'GET':
+        if id == 0:
+            form = CustomUserForm()
+        else:
+            user = CustomUser.objects.get(pk=id)
+            form = CustomUserForm(instance=user)
+        return render(request, 'form_user.html', {'form': form})
+    else:
+        if id == 0:
+            form = CustomUserForm(request.POST)
+        else:
+            user = CustomUser.objects.get(pk=id)
+            form = CustomUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
         return redirect('all_users')
-    return render(request, 'create_user.html', {})
-
 
 def delete_user(request, id):
     CustomUser.delete_by_id(id)
